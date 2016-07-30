@@ -7,16 +7,24 @@ output:
 
 
 ## Loading and preprocessing the data
-
-
+```{r processfile, echo=TRUE}
+        activityData <- read.csv(unzip(zipfile='activity.zip'))
+```
 
 ## What is mean total number of steps taken per day?
-
-
+```{r dailyMean, echo=TRUE}
+        library(ggplot2)
+        stepDailyMean <- tapply(activityData$steps, activityData$date, sum, na.rm=TRUE)
+        hist(stepDailyMean, col='green', xlab='Total Number of Steps Each Day')
+        dailyMean <- mean(stepDailyMean, na.rm = TRUE)
+        dailyMedian <- median(stepDailyMean, na.rm = TRUE)
+```
+The mean is r dailyMean and the median is r dailyMedian.
 
 ## What is the average daily activity pattern?
-
-
+```{r dailyPattern, echo=TRUE}
+        
+'''
 
 ## Imputing missing values
 
