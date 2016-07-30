@@ -20,7 +20,7 @@ output:
         dailyMean <- mean(stepDailyMean, na.rm = TRUE)
         dailyMedian <- median(stepDailyMean, na.rm = TRUE)
 ```
-
+  
 The daily mean of steps taken is `r dailyMean` and the daily median is `r dailyMedian`.  
 
 
@@ -38,7 +38,7 @@ The daily mean of steps taken is `r dailyMean` and the daily median is `r dailyM
 
         maxAverage <- intervalAverages[which.max(intervalAverages$steps),]
 ```
-
+  
 The 5 minute interval with the maximum average of steps takenacross the dataset is interval `r maxAverage$interval` with `r maxAverage$steps` steps.   
 
 
@@ -46,8 +46,31 @@ The 5 minute interval with the maximum average of steps takenacross the dataset 
 ```{r missingValues, echo=TRUE}
         missingValues <- sum(is.na(activityData))
 ```
-
+  
 Total number of missing vlues in the dataset is `r missingValues`.  
+
+```{r fillingData, echo=TRUE}
+        newActivityData <- activityData 
+
+        for (i in 1:nrow(newActivityData)) {
+                if (is.na(newActivityData$steps[i])) {
+                        newActivityData$steps[i] <- intervalAverages$steps[intervalAverages$interval==newActivityData$interval[i]]
+                }
+        }
+```
+  
+New dataset created to with missing step values replaced with the value from the repective mean of 5-minute interval.  
+The new data set is called newActivityData.
+
+```{r newplot, echo=TRUE}
+        newStepDailyMean <- tapply(newActivityData$steps, newActivityData$date, sum)
+        hist(newStepDailyMean, col='blue', xlab='Total Number of Steps Each Day')
+        newDailyMean <- mean(newStepDailyMean)
+        newDailyMedian <- median(newStepDailyMean)
+```
+  
+The daily mean for the new dataset without missing values is `r newDailyMean` and the daily median for the new dataset is `r newDailyMedian`.  
+The new mean and median values for the new dataset are higher than the mean and mediam from the orginal dataset as missing values have been replaced with the mean values of the respective interval mean.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 

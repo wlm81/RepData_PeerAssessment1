@@ -29,7 +29,7 @@
         dailyMean <- mean(stepDailyMean, na.rm = TRUE)
         dailyMedian <- median(stepDailyMean, na.rm = TRUE)
 ```
-
+  
 The daily mean of steps taken is 9354.2295082 and the daily median is 10395.  
 
 
@@ -52,7 +52,7 @@ The daily mean of steps taken is 9354.2295082 and the daily median is 10395.
 ```r
         maxAverage <- intervalAverages[which.max(intervalAverages$steps),]
 ```
-
+  
 The 5 minute interval with the maximum average of steps takenacross the dataset is interval 835 with 206.1698113 steps.   
 
 
@@ -61,8 +61,37 @@ The 5 minute interval with the maximum average of steps takenacross the dataset 
 ```r
         missingValues <- sum(is.na(activityData))
 ```
-
+  
 Total number of missing vlues in the dataset is 2304.  
+
+
+```r
+        newActivityData <- activityData 
+
+        for (i in 1:nrow(newActivityData)) {
+                if (is.na(newActivityData$steps[i])) {
+                        newActivityData$steps[i] <- intervalAverages$steps[intervalAverages$interval==newActivityData$interval[i]]
+                }
+        }
+```
+  
+New dataset created to with missing step values replaced with the value from the repective mean of 5-minute interval.  
+The new data set is called newActivityData.
+
+
+```r
+        newStepDailyMean <- tapply(newActivityData$steps, newActivityData$date, sum)
+        hist(newStepDailyMean, col='blue', xlab='Total Number of Steps Each Day')
+```
+
+![](PA1_template_files/figure-html/newplot-1.png)<!-- -->
+
+```r
+        newDailyMean <- mean(newStepDailyMean)
+        newDailyMedian <- median(newStepDailyMean)
+```
+  
+The daily mean for the new dataset without missing values is 1.0766189\times 10^{4} and the daily median for the new dataset is 1.0766189\times 10^{4}. 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
