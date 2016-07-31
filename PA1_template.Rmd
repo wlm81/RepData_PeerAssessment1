@@ -73,4 +73,23 @@ The daily mean for the new dataset without missing values is `r newDailyMean` an
 The new mean and median values for the new dataset are higher than the mean and mediam from the orginal dataset as missing values have been replaced with the mean values of the respective interval mean.
 
 ## Are there differences in activity patterns between weekdays and weekends?
-
+```{r dayOfWeek, echo=TRUE}
+        library(timeDate)
+        
+        newActivityData$DayOfWeek <- factor((isWeekday(newActivityData$date, wday=1:5)), 
+                                            labels=c("weekend","weekday"))
+```
+### Plotting the results of weekday and weekend activities
+```{r DoWPlots, echo=TRUE}
+        library(lattice)
+        
+        newAverages <- aggregate(steps ~ interval + DayOfWeek, newActivityData, FUN=mean)
+        
+        xyplot(newAverages$steps ~ newAverages$interval|newAverages$DayOfWeek, 
+               layout=c(1,2), 
+               type="l",
+               main="Average number of Steps per Interval seperated \nby Weekday and Weekend Activities",
+               xlab="Interval", 
+               ylab="Steps"
+               )
+```
