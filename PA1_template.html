@@ -119,6 +119,17 @@ $(document).ready(function () {
 </div>
 
 
+<p>by W L Man.<br />
+31 July 2016.</p>
+<p>This is a Coursera Assignment for week 2 on Reproducible Research.</p>
+<p>This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.</p>
+<p>The data for this assignment can be downloaded from the course web site:</p>
+<p>Dataset: Activity monitoring data [52K]</p>
+<p>The variables included in this dataset are:<br />
+. steps: Number of steps taking in a 5-minute interval (missing values are coded as NA)<br />
+. date: The date on which the measurement was taken in YYYY-MM-DD format<br />
+. interval: Identifier for the 5-minute interval in which measurement was taken</p>
+<p>The dataset is stored in a comma-separated-value (CSV) file and there are a total of 17,568 observations in this dataset.</p>
 <div id="loading-and-preprocessing-the-data" class="section level2">
 <h2>Loading and preprocessing the data</h2>
 <pre class="r"><code>        activityData &lt;- read.csv(unzip(zipfile='activity.zip'))</code></pre>
@@ -152,7 +163,7 @@ $(document).ready(function () {
 <div id="imputing-missing-values" class="section level2">
 <h2>Imputing missing values</h2>
 <pre class="r"><code>        missingValues &lt;- sum(is.na(activityData))</code></pre>
-<p>Total number of missing vlues in the dataset is 2304.</p>
+<p>Total number of missing values in the dataset is 2304.</p>
 <pre class="r"><code>        newActivityData &lt;- activityData 
 
         for (i in 1:nrow(newActivityData)) {
